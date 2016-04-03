@@ -29,9 +29,9 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	ret = start_thread_pool(p);
+	ret = spawn_thread_pool(p);
 	if (!ret){
-		stop_thread_pool(p);
+		kill_thread_pool(p);
 		return -1;
 	}
 
@@ -39,7 +39,7 @@ int main(int argc, char **argv){
 	while(n-->0){
 		sleep(2);
 	}
-	stop_thread_pool(p);
+	kill_thread_pool(p);
 
 	return 0;
 }

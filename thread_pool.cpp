@@ -8,16 +8,113 @@
 
 using namespace std;
 
-static bool init_thread(pthread_attr_t &attr){
+
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+
+#define handle_error_en(en, msg) \
+        do { errno = en; perror(msg); exit(EXIT_FAILURE); } while (0)
+
+static void
+display_pthread_attr(pthread_attr_t *attr, char *prefix)
+{
+    int s, i;
+    size_t v;
+    void *stkaddr;
+    struct sched_param sp;
+
+    s = pthread_attr_getdetachstate(attr, &i);
+    if (s != 0)
+        handle_error_en(s, "pthread_attr_getdetachstate");
+    printf("%sDetach state        = %s\n", prefix,
+            (i == PTHREAD_CREATE_DETACHED) ? "PTHREAD_CREATE_DETACHED" :
+            (i == PTHREAD_CREATE_JOINABLE) ? "PTHREAD_CREATE_JOINABLE" :
+            "???");
+
+    s = pthread_attr_getscope(attr, &i);
+    if (s != 0)
+        handle_error_en(s, "pthread_attr_getscope");
+    printf("%sScope               = %s\n", prefix,
+            (i == PTHREAD_SCOPE_SYSTEM)  ? "PTHREAD_SCOPE_SYSTEM" :
+            (i == PTHREAD_SCOPE_PROCESS) ? "PTHREAD_SCOPE_PROCESS" :
+            "???");
+
+    s = pthread_attr_getinheritsched(attr, &i);
+    if (s != 0)
+        handle_error_en(s, "pthread_attr_getinheritsched");
+    printf("%sInherit scheduler   = %s\n", prefix,
+            (i == PTHREAD_INHERIT_SCHED)  ? "PTHREAD_INHERIT_SCHED" :
+            (i == PTHREAD_EXPLICIT_SCHED) ? "PTHREAD_EXPLICIT_SCHED" :
+            "???");
+
+    s = pthread_attr_getschedpolicy(attr, &i);
+    if (s != 0)
+        handle_error_en(s, "pthread_attr_getschedpolicy");
+    printf("%sScheduling policy   = %s\n", prefix,
+            (i == SCHED_OTHER) ? "SCHED_OTHER" :
+            (i == SCHED_FIFO)  ? "SCHED_FIFO" :
+            (i == SCHED_RR)    ? "SCHED_RR" :
+            "???");
+
+    s = pthread_attr_getschedparam(attr, &sp);
+    if (s != 0)
+        handle_error_en(s, "pthread_attr_getschedparam");
+    printf("%sScheduling priority = %d\n", prefix, sp.sched_priority);
+
+    s = pthread_attr_getguardsize(attr, &v);
+    if (s != 0)
+        handle_error_en(s, "pthread_attr_getguardsize");
+    printf("%sGuard size          = %d bytes\n", prefix, v);
+
+    s = pthread_attr_getstack(attr, &stkaddr, &v);
+    if (s != 0)
+        handle_error_en(s, "pthread_attr_getstack");
+    printf("%sStack address       = %p\n", prefix, stkaddr);
+    printf("%sStack size          = 0x%x bytes\n", prefix, v);
+}
+
+static bool 
+init_thread(pthread_attr_t &attr){
 	bool rv = true;
 	pthread_attr_init(&attr);
 	return rv;
 }
 
-static bool start_thread(pthread_t& tid, pthread_attr_t& attr, void *(*start_routine)(void *), void *arg){
+static bool 
+spawn_thread(pthread_t& tid, pthread_attr_t& attr, void *(*start_routine)(void *), void *arg){
 
 	bool rv = true;
 	void *status = NULL;
+
+
+#if 0
+	/* 设置线程属性  */
+	int stack_size = 4096;
+	void *sp;
+	int s;
+
+	s = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+        if (s != 0)
+        	handle_error_en(s, "pthread_attr_setdetachstate");
+
+        s = pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED);
+        if (s != 0)
+        	handle_error_en(s, "pthread_attr_setinheritsched");
+
+        s = posix_memalign(&sp, sysconf(_SC_PAGESIZE), stack_size);
+        if (s != 0)
+        	handle_error_en(s, "posix_memalign");
+
+        printf("posix_memalign() allocated at %p\n", sp);
+
+        s = pthread_attr_setstack(&attr, sp, stack_size);
+        if (s != 0)
+        	handle_error_en(s, "pthread_attr_setstack");
+#endif
+
 
 	int ret = pthread_create(&tid, &attr, start_routine, arg);
 	switch(ret){
@@ -119,12 +216,14 @@ ext:
 	return rv;
 }
 
-static bool stop_thread(pthread_t &tid, pthread_attr_t &attr){
+static bool 
+kill_thread(pthread_t &tid, pthread_attr_t &attr){
 	pthread_cancel(tid);
 	pthread_attr_destroy(&attr);
 }
 
-bool init_thread_pool(struct thread_pool &p){
+bool 
+init_thread_pool(struct thread_pool &p){
 
 	bool rv = true;
 
@@ -135,23 +234,26 @@ bool init_thread_pool(struct thread_pool &p){
 	return rv;
 }
 
-bool start_thread_pool(struct thread_pool &p){
+bool 
+spawn_thread_pool(struct thread_pool &p){
 	
 	bool rv = true;
 	
 	for(int i=0; i<p.size; i++){
 		pthread_attr_t &attr = p.v_attr[i];
 		pthread_t &tid = p.v_tid[i];
-		rv = start_thread(tid, attr, p.start_routine, p.arg);
+		rv = spawn_thread(tid, attr, p.start_routine, p.arg);
 		if (!rv) {
 			break;
 		}
+		display_pthread_attr(&attr, "\t");
 	}
 
 	return rv;
 }
 
-bool stop_thread_pool(struct thread_pool &p){
+bool 
+kill_thread_pool(struct thread_pool &p){
 
 	bool rv = true;
 
@@ -159,7 +261,7 @@ bool stop_thread_pool(struct thread_pool &p){
 		pthread_attr_t &attr = p.v_attr[i];
 		pthread_t &tid = p.v_tid[i];
 		if (tid > 0){
-			stop_thread(tid, attr);
+			kill_thread(tid, attr);
 		}
 	}
 

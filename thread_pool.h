@@ -30,7 +30,7 @@ struct thread_pool{
 };
 
 bool init_thread_pool(struct thread_pool &p);
-bool start_thread_pool(struct thread_pool &p);
-bool stop_thread_pool(struct thread_pool &p);
+bool spawn_thread_pool(struct thread_pool &p);
+bool kill_thread_pool(struct thread_pool &p);
 
 #endif //__THREAD_POOL_H__
