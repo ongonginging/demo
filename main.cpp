@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <iostream>
 
-#include "thread_pool.h"
+#include "ThreadPool.h"
 
 using namespace std;
 
@@ -21,17 +21,18 @@ int main(int argc, char **argv){
 	bool ret = true;
 
 	long size = sysconf(_SC_NPROCESSORS_ONLN);
-	struct thread_pool p(size, start_routine, arg);
-	cout<<"number of workers: "<<p.size<<endl;
+	cout<<"number of workers: "<<size<<endl;
 
-	ret = init_thread_pool(p);
+	ThreadPool p(size, start_routine, arg);
+
+	ret = p.Init();
 	if (!ret){
 		return -1;
 	}
 
-	ret = spawn_thread_pool(p);
+	ret = p.Spawn();
 	if (!ret){
-		free_thread_pool(p);
+		p.Shutdown();
 		return -1;
 	}
 
@@ -39,7 +40,7 @@ int main(int argc, char **argv){
 	while(n-->0){
 		sleep(2);
 	}
-	free_thread_pool(p);
+	p.Shutdown();
 
 	return 0;
 }

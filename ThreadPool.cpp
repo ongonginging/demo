@@ -4,7 +4,7 @@
 
 #include <pthread.h>
 
-#include "thread_pool.h"
+#include "ThreadPool.h"
 
 using namespace std;
 
@@ -223,27 +223,44 @@ free_thread(pthread_t &tid, pthread_attr_t &attr){
 	pthread_attr_destroy(&attr);
 }
 
+ThreadPool::ThreadPool(long size, void *(* start_routine)(void *), void *arg){
+	std::cout<<"Contruct ThreadPool."<<std::endl;
+	this->size = size;
+	for(int i=0; i<size; i++){
+		pthread_attr_t attr;
+		this->v_attr.push_back(attr);
+		this->v_tid.push_back(-1);
+	}
+	this->start_routine = start_routine;
+	this->arg = arg;
+};
+
+ThreadPool::~ThreadPool(){
+	std::cout<<"Destruct ThreadPool."<<std::endl;
+};
+
+
 bool 
-init_thread_pool(struct thread_pool &p){
+ThreadPool::Init(){
 
 	bool rv = true;
 
-	for (int i=0; i<p.size; i++){
-		pthread_attr_init(&p.v_attr[i]);
+	for (int i=0; i<this->size; i++){
+		pthread_attr_init(&this->v_attr[i]);
 	}
 
 	return rv;
 }
 
 bool 
-spawn_thread_pool(struct thread_pool &p){
+ThreadPool::Spawn(){
 	
 	bool rv = true;
 	
-	for(int i=0; i<p.size; i++){
-		pthread_attr_t &attr = p.v_attr[i];
-		pthread_t &tid = p.v_tid[i];
-		rv = spawn_thread(tid, attr, p.start_routine, p.arg);
+	for(int i=0; i<this->size; i++){
+		pthread_attr_t &attr = this->v_attr[i];
+		pthread_t &tid = this->v_tid[i];
+		rv = spawn_thread(tid, attr, this->start_routine, this->arg);
 		if (!rv) {
 			break;
 		}
@@ -254,13 +271,13 @@ spawn_thread_pool(struct thread_pool &p){
 }
 
 bool 
-free_thread_pool(struct thread_pool &p){
+ThreadPool::Shutdown(){
 
 	bool rv = true;
 
-	for (int i=0; i<p.size; i++){
-		pthread_attr_t &attr = p.v_attr[i];
-		pthread_t &tid = p.v_tid[i];
+	for (int i=0; i<this->size; i++){
+		pthread_attr_t &attr = this->v_attr[i];
+		pthread_t &tid = this->v_tid[i];
 		if (tid > 0){
 			free_thread(tid, attr);
 		}
