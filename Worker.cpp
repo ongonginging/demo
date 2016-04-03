@@ -1,4 +1,7 @@
 
+#include <unistd.h>
+#include <iostream>
+
 #include "Worker.h"
 
 Worker::Worker(){
@@ -33,6 +36,11 @@ void *Worker::_Routine(void *arg){
 	void *rv = NULL;
 
 	Worker *worker = static_cast<Worker *>(arg);
+	
+	while(true){
+		sleep(1);
+		cout<<"Hello, World!("<<pthread_self()<<")"<<endl;
+	}
 
 	return rv;
 }
