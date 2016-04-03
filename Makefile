@@ -9,7 +9,7 @@ LDFLAGS:= -lpthread
 TARGET:Main.o ThreadPool.o Worker.o
 	$(CXX) $(CXXFLAGS) -o $(TARGET) Main.o ThreadPool.o Worker.o $(LDFLAGS)
 
-Main.o:Main.cpp ThreadPool.h
+Main.o:Main.cpp Worker.h
 	$(CXX) $(CXXFLAGS) -c Main.cpp
 
 ThreadPool.o:ThreadPool.cpp ThreadPool.h
