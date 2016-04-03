@@ -8,6 +8,7 @@ using namespace std;
 
 struct thread_pool{
 	thread_pool(long size, void *(* start_routine)(void *), void *arg){
+		std::cout<<"Contruct thread_pool."<<std::endl;
 		this->size = size;
 		for(int i=0; i<size; i++){
 			pthread_attr_t attr;
@@ -18,6 +19,7 @@ struct thread_pool{
 		this->arg = arg;
 	};
 	~thread_pool(){
+		std::cout<<"Destruct thread_pool."<<std::endl;
 	};
 	long size;
 	vector<pthread_attr_t> v_attr;
