@@ -67,13 +67,13 @@ display_pthread_attr(pthread_attr_t *attr, char *prefix)
     s = pthread_attr_getguardsize(attr, &v);
     if (s != 0)
         handle_error_en(s, "pthread_attr_getguardsize");
-    printf("%sGuard size          = %d bytes\n", prefix, v);
+    printf("%sGuard size          = %lu bytes\n", prefix, v);
 
     s = pthread_attr_getstack(attr, &stkaddr, &v);
     if (s != 0)
         handle_error_en(s, "pthread_attr_getstack");
     printf("%sStack address       = %p\n", prefix, stkaddr);
-    printf("%sStack size          = 0x%x bytes\n", prefix, v);
+    printf("%sStack size          = 0x%lx bytes\n", prefix, v);
 }
 
 static bool 
@@ -91,8 +91,8 @@ spawn_thread(pthread_t& tid, pthread_attr_t& attr, void *(*start_routine)(void *
 
 
 #if 1
-	/* 设置线程属性  */
-	int stack_size = 2097152;
+	/* 设置线程属性 */
+	int stack_size = 2097152;//2M
 	void *sp;
 	int s;
 
@@ -247,7 +247,7 @@ spawn_thread_pool(struct thread_pool &p){
 		if (!rv) {
 			break;
 		}
-		display_pthread_attr(&attr, "\t");
+		display_pthread_attr(&attr, (char *)"\t");
 	}
 
 	return rv;
