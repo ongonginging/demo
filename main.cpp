@@ -24,12 +24,12 @@ bool init_thread(pthread_attr_t &attr){
 	return rv;
 }
 
-bool start_thread(pthread_t& tid, pthread_attr_t& pthread_attr, void *(*start_routine)(void *), void *arg){
+bool start_thread(pthread_t& tid, pthread_attr_t& attr, void *(*start_routine)(void *), void *arg){
 
 	bool rv = true;
 	void *status = NULL;
 
-	int ret = pthread_create(&tid, &pthread_attr, start_routine, arg);
+	int ret = pthread_create(&tid, &attr, start_routine, arg);
 	switch(ret){
 		case 0:
 		{

@@ -1,7 +1,7 @@
 
 TARGET:=program
 CXX:=g++
-CXXFLAGS:= --std=c++11 -g -O2
+CXXFLAGS:= --std=c++11 -g -O0
 LDFLAGS:= -lpthread 
 
 .PHONY:clean
