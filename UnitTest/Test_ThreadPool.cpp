@@ -2,9 +2,19 @@
 #include <unistd.h>
 #include <iostream>
 
-#include "Worker.h"
+#include "ThreadPool.h"
 
 using namespace std;
+
+void *arg = NULL;
+
+void *start_routine(void *arg){
+	while(true){
+		cout<<"Hello, World("<<pthread_self()<<")!"<<endl;
+		sleep(1);
+	}
+	pthread_exit(0);
+}
 
 int main(int argc, char **argv){
 
@@ -13,16 +23,16 @@ int main(int argc, char **argv){
 	long size = sysconf(_SC_NPROCESSORS_ONLN);
 	cout<<"number of workers: "<<size<<endl;
 
-	Worker worker;
+	ThreadPool p;
 
-	ret = worker.Init(size);
+	ret = p.Init(size, start_routine, arg);
 	if (!ret){
 		return -1;
 	}
 
-	ret = worker.Start();
+	ret = p.Start();
 	if (!ret){
-		worker.Shutdown();
+		p.Shutdown();
 		return -1;
 	}
 
@@ -30,7 +40,7 @@ int main(int argc, char **argv){
 	while(n-->0){
 		sleep(2);
 	}
-	worker.Shutdown();
+	p.Shutdown();
 
 	return 0;
 }
