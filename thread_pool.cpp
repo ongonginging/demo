@@ -90,9 +90,9 @@ spawn_thread(pthread_t& tid, pthread_attr_t& attr, void *(*start_routine)(void *
 	void *status = NULL;
 
 
-#if 0
+#if 1
 	/* 设置线程属性  */
-	int stack_size = 4096;
+	int stack_size = 2097152;
 	void *sp;
 	int s;
 
@@ -150,7 +150,7 @@ spawn_thread(pthread_t& tid, pthread_attr_t& attr, void *(*start_routine)(void *
 		goto ext;
 	}
 
-#if 1
+#if 0
 	/* detach不会阻塞启动线程，线程退出以后自动释放所有资源 */
 	ret = pthread_detach(tid);
 	switch(ret){
@@ -175,7 +175,8 @@ spawn_thread(pthread_t& tid, pthread_attr_t& attr, void *(*start_routine)(void *
 		}
 		break;
 	}
-#else
+#endif
+#if 0
 	/* join到启动线程会导致启动线程阻塞 */
 	ret = pthread_join(tid, &status);
 	switch(ret){
