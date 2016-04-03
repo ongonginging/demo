@@ -12,9 +12,6 @@ class TaskManager{
 public:
 	TaskManager();
 	virtual ~TaskManager();
-	bool Init();
-	bool Start();
-	bool Shutdown();
 
 	bool PushTask(ITask &task);
 	bool PopTask(ITask &task);

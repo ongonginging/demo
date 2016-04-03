@@ -2,19 +2,12 @@
 #include <iostream>
 #include <semaphore.h>
 
+#include "ITask.h"
 #include "TaskManager.h"
 
 using namespace std;
 
 TaskManager::TaskManager(){
-	
-}
-
-TaskManager::~TaskManager(){
-}
-
-bool TaskManager::Init(){
-	bool rv = true;
 	int pshared = 0; /* Semaphore is used within this process only. */
 	int count = 0;
 	int ret = sem_init(&this->Sem, pshared, count);
@@ -40,16 +33,9 @@ bool TaskManager::Init(){
 		}
 		break;
 	}
-	return rv;
 }
 
-bool TaskManager::Start(){
-	bool rv = true;
-	return rv;
-}
-
-bool TaskManager::Shutdown(){
-	bool rv = true;
+TaskManager::~TaskManager(){
 	int ret = sem_destroy(&this->Sem);
 	switch(ret){
 		case 0:
@@ -68,7 +54,6 @@ bool TaskManager::Shutdown(){
 		}
 		break;
 	}
-	return rv;
 }
 
 bool TaskManager::PushTask(ITask &task){
