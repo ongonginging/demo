@@ -253,7 +253,7 @@ ThreadPool::Init(long size, void *(* start_routine)(void *), void *arg){
 }
 
 bool 
-ThreadPool::Spawn(){
+ThreadPool::Start(){
 	
 	bool rv = true;
 	

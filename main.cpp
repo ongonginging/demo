@@ -30,7 +30,7 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	ret = p.Spawn();
+	ret = p.Start();
 	if (!ret){
 		p.Shutdown();
 		return -1;

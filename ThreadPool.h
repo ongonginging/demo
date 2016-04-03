@@ -3,6 +3,7 @@
 #define __THREAD_POOL_H__
 
 #include <vector>
+#include <pthread.h>
 
 using namespace std;
 
@@ -11,9 +12,9 @@ class ThreadPool{
 public:
 
 	ThreadPool();
-	~ThreadPool();
+	virtual ~ThreadPool();
 	bool Init(long size, void *(* start_routine)(void *), void *arg);
-	bool Spawn();
+	bool Start();
 	bool Shutdown();
 
 private:

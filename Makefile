@@ -6,7 +6,7 @@ LDFLAGS:= -lpthread
 
 .PHONY:clean
 
-TARGET:main.o ThreadPool.o
+TARGET:main.o ThreadPool.o Worker.o
 	$(CXX) $(CXXFLAGS) -o $(TARGET) main.o ThreadPool.o $(LDFLAGS)
 
 main.o:main.cpp ThreadPool.h
@@ -14,6 +14,9 @@ main.o:main.cpp ThreadPool.h
 
 ThreadPool.o:ThreadPool.cpp ThreadPool.h
 	$(CXX) $(CXXFLAGS) -c ThreadPool.cpp 
+
+Worker.o:Worker.cpp Worker.h
+	$(CXX) $(CXXFLAGS) -c Worker.cpp 
 
 clean:
 	rm -rf $(TARGET) *.o
