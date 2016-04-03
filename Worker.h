@@ -7,7 +7,6 @@
 class Worker{
 
 public:
-
 	Worker();
 	virtual ~Worker();
 
@@ -16,7 +15,6 @@ public:
 	bool Shutdown();
 
 private:
-
 	class RoutineArg{
 	};
 
@@ -28,3 +26,4 @@ private:
 };
 
 #endif //__WORKER_H__
+
