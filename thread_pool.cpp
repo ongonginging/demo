@@ -218,7 +218,7 @@ ext:
 }
 
 static bool 
-kill_thread(pthread_t &tid, pthread_attr_t &attr){
+free_thread(pthread_t &tid, pthread_attr_t &attr){
 	pthread_cancel(tid);
 	pthread_attr_destroy(&attr);
 }
@@ -254,7 +254,7 @@ spawn_thread_pool(struct thread_pool &p){
 }
 
 bool 
-kill_thread_pool(struct thread_pool &p){
+free_thread_pool(struct thread_pool &p){
 
 	bool rv = true;
 
@@ -262,7 +262,7 @@ kill_thread_pool(struct thread_pool &p){
 		pthread_attr_t &attr = p.v_attr[i];
 		pthread_t &tid = p.v_tid[i];
 		if (tid > 0){
-			kill_thread(tid, attr);
+			free_thread(tid, attr);
 		}
 	}
 
