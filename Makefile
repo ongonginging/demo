@@ -6,11 +6,11 @@ LDFLAGS:= -lpthread
 
 .PHONY:clean
 
-TARGET:main.o ThreadPool.o Worker.o
-	$(CXX) $(CXXFLAGS) -o $(TARGET) main.o ThreadPool.o Worker.o $(LDFLAGS)
+TARGET:Main.o ThreadPool.o Worker.o
+	$(CXX) $(CXXFLAGS) -o $(TARGET) Main.o ThreadPool.o Worker.o $(LDFLAGS)
 
-main.o:main.cpp ThreadPool.h
-	$(CXX) $(CXXFLAGS) -c main.cpp
+Main.o:Main.cpp ThreadPool.h
+	$(CXX) $(CXXFLAGS) -c Main.cpp
 
 ThreadPool.o:ThreadPool.cpp ThreadPool.h
 	$(CXX) $(CXXFLAGS) -c ThreadPool.cpp 
