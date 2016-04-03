@@ -4,14 +4,17 @@
 
 #include "ThreadPool.h"
 
-struct worker{
-	worker(long size=0){
-		this->size = size;
-	};
-	~worker(){};
+class Worker{
+
+public:
+
+	Worker();
+	~Worker();
+
+private:
 
 	long size;
-	struct ThreadPool *pThreadPool;
+	struct ThreadPool _ThreadPool;
 };
 
 #endif //__WORKER_H__

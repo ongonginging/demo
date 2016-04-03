@@ -223,8 +223,19 @@ free_thread(pthread_t &tid, pthread_attr_t &attr){
 	pthread_attr_destroy(&attr);
 }
 
-ThreadPool::ThreadPool(long size, void *(* start_routine)(void *), void *arg){
+ThreadPool::ThreadPool(){
 	std::cout<<"Contruct ThreadPool."<<std::endl;
+};
+
+ThreadPool::~ThreadPool(){
+	std::cout<<"Destruct ThreadPool."<<std::endl;
+};
+
+bool 
+ThreadPool::Init(long size, void *(* start_routine)(void *), void *arg){
+
+	bool rv = true;
+
 	this->size = size;
 	for(int i=0; i<size; i++){
 		pthread_attr_t attr;
@@ -233,17 +244,6 @@ ThreadPool::ThreadPool(long size, void *(* start_routine)(void *), void *arg){
 	}
 	this->start_routine = start_routine;
 	this->arg = arg;
-};
-
-ThreadPool::~ThreadPool(){
-	std::cout<<"Destruct ThreadPool."<<std::endl;
-};
-
-
-bool 
-ThreadPool::Init(){
-
-	bool rv = true;
 
 	for (int i=0; i<this->size; i++){
 		pthread_attr_init(&this->v_attr[i]);

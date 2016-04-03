@@ -10,9 +10,9 @@ class ThreadPool{
 
 public:
 
-	ThreadPool(long size, void *(* start_routine)(void *), void *arg);
+	ThreadPool();
 	~ThreadPool();
-	bool Init();
+	bool Init(long size, void *(* start_routine)(void *), void *arg);
 	bool Spawn();
 	bool Shutdown();
 

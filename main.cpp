@@ -23,9 +23,9 @@ int main(int argc, char **argv){
 	long size = sysconf(_SC_NPROCESSORS_ONLN);
 	cout<<"number of workers: "<<size<<endl;
 
-	ThreadPool p(size, start_routine, arg);
+	ThreadPool p;
 
-	ret = p.Init();
+	ret = p.Init(size, start_routine, arg);
 	if (!ret){
 		return -1;
 	}
