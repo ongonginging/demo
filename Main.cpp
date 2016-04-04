@@ -28,15 +28,9 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
+	consumer.SetTask(new Hello);
+
 	Monitor monitor;
-	consumer.SetTask(new Hello);
-	consumer.SetTask(new Hello);
-	consumer.SetTask(new Hello);
-	consumer.SetTask(new Hello);
-	consumer.SetTask(new Hello);
-	consumer.SetTask(new Hello);
-	consumer.SetTask(new Hello);
-	consumer.SetTask(new Hello);
 	monitor.Run();
 
 	consumer.Shutdown();

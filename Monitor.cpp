@@ -18,6 +18,6 @@ void Monitor::Run(){
 	cout<<"Running Monitor"<<std::endl;
 	while(true){
 		sleep(1);
-		cout<<"In loop of Monitor."<<endl;
+		//cout<<"In loop of Monitor."<<endl;
 	}
 }

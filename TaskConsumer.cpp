@@ -52,6 +52,7 @@ void *TaskConsumer::_Routine(void *arg){
 		if (ret){
 			if (task != NULL){
 				task->Run();
+				delete task;
 			}else{
 				cout<<"Task is NULL."<<endl;
 			}

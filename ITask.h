@@ -4,6 +4,8 @@
 
 class ITask{
 public:
+	ITask(){};
+	virtual ~ITask(){};
 	virtual void Run(void) = 0;
 };
 

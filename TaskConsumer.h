@@ -2,9 +2,9 @@
 #ifndef __WORKER_H__
 #define __WORKER_H__
 
+#include "ITask.h"
 #include "ThreadPool.h"
 #include "TaskQueue.h"
-#include "ITask.h"
 
 class TaskConsumer{
 
@@ -17,6 +17,7 @@ public:
 	bool Shutdown();
 	bool GetTask(ITask *&task);
 	bool SetTask(ITask *task);
+
 private:
 	class RoutineArg{
 	};
