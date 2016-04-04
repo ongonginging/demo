@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <iostream>
 
-#include "Worker.h"
+#include "WorkerManager.h"
 
 using namespace std;
 
@@ -11,18 +11,18 @@ int main(int argc, char **argv){
 	bool ret = true;
 
 	long size = sysconf(_SC_NPROCESSORS_ONLN);
-	cout<<"number of workers: "<<size<<endl;
+	cout<<"number of WorkerManagers: "<<size<<endl;
 
-	Worker worker;
+	WorkerManager WorkerManager;
 
-	ret = worker.Init(size);
+	ret = WorkerManager.Init(size);
 	if (!ret){
 		return -1;
 	}
 
-	ret = worker.Start();
+	ret = WorkerManager.Start();
 	if (!ret){
-		worker.Shutdown();
+		WorkerManager.Shutdown();
 		return -1;
 	}
 
@@ -30,7 +30,7 @@ int main(int argc, char **argv){
 	while(n-->0){
 		sleep(2);
 	}
-	worker.Shutdown();
+	WorkerManager.Shutdown();
 
 	return 0;
 }

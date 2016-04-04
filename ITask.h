@@ -4,7 +4,7 @@
 
 class ITask{
 public:
-	virtual Run() = 0;
-}
+	virtual void Run(void) = 0;
+};
 
 #endif //__TASK_H__

@@ -231,8 +231,7 @@ ThreadPool::~ThreadPool(){
 	std::cout<<"Destruct ThreadPool."<<std::endl;
 };
 
-bool 
-ThreadPool::Init(long size, void *(* start_routine)(void *), void *arg){
+bool ThreadPool::Init(long size, void *(* start_routine)(void *), void *arg){
 
 	bool rv = true;
 
@@ -252,8 +251,7 @@ ThreadPool::Init(long size, void *(* start_routine)(void *), void *arg){
 	return rv;
 }
 
-bool 
-ThreadPool::Start(){
+bool ThreadPool::Start(){
 	
 	bool rv = true;
 	
@@ -270,8 +268,7 @@ ThreadPool::Start(){
 	return rv;
 }
 
-bool 
-ThreadPool::Shutdown(){
+bool ThreadPool::Shutdown(){
 
 	bool rv = true;
 
