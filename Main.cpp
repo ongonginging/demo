@@ -28,7 +28,9 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	consumer.SetTask(new Hello);
+	for(int i=0; i<20; i++){
+		consumer.SetTask(new Hello(i));
+	}
 
 	Monitor monitor;
 	monitor.Run();

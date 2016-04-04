@@ -6,9 +6,11 @@
 
 class Hello: public ITask{
 public:
-	Hello();
+	Hello(int i);
 	virtual ~Hello();
 	virtual void Run();
+private:
+	int i;
 };
 
 #endif //__HELLO_H__
