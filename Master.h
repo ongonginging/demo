@@ -1,6 +1,6 @@
 
-#ifndef __MASTER_H__
-#define __MASTER_H__
+#ifndef __MASTERMANAGER_H__
+#define __MASTERMANAGER_H__
 
 class Master{
 
@@ -12,4 +12,4 @@ private:
 
 };
 
-#endif //__MASTER_H__
+#endif //__MASTERMANAGER_H__
