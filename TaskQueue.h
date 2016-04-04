@@ -20,7 +20,7 @@ public:
 	bool Pop(ITask *&task);
 
 private:
-	sem_t Sem; /* read/write semaphore */
+	sem_t Sem; 
 	deque<ITask*> _Queue;
 };
 

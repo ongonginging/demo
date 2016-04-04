@@ -12,6 +12,6 @@ Monitor::~Monitor(){
 	cout<<"Destruct Monitor."<<endl;
 }
 
-Monitor::Run(){
+void Monitor::Run(){
 	cout<<"Monitor"<<std::endl;
 }

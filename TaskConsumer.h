@@ -3,6 +3,8 @@
 #define __WORKER_H__
 
 #include "ThreadPool.h"
+#include "TaskQueue.h"
+#include "ITask.h"
 
 class TaskConsumer{
 
@@ -13,6 +15,7 @@ public:
 	bool Init(long size);
 	bool Start();
 	bool Shutdown();
+	bool GetTask(ITask *&task);
 
 private:
 	class RoutineArg{
@@ -22,7 +25,9 @@ private:
 	RoutineArg _RoutineArg;
 
 	long size;
-	struct ThreadPool _ThreadPool;
+	ThreadPool _ThreadPool;
+
+	TaskQueue _TaskQueue;
 };
 
 #endif //__WORKER_H__
