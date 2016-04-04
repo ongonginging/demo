@@ -4,11 +4,11 @@
 
 #include "ThreadPool.h"
 
-class ThreadManager{
+class TaskSched{
 
 public:
-	ThreadManager();
-	virtual ~ThreadManager();
+	TaskSched();
+	virtual ~TaskSched();
 
 	bool Init(long size);
 	bool Start();

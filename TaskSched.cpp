@@ -2,40 +2,40 @@
 #include <unistd.h>
 #include <iostream>
 
-#include "ThreadManager.h"
+#include "TaskSched.h"
 
-ThreadManager::ThreadManager(){
+TaskSched::TaskSched(){
 }
 
-ThreadManager::~ThreadManager(){
+TaskSched::~TaskSched(){
 }
 
-bool ThreadManager::Init(long size){
+bool TaskSched::Init(long size){
 
 	bool rv = this->_ThreadPool.Init(size);
 
 	return rv;
 }
 
-bool ThreadManager::Start(){
+bool TaskSched::Start(){
 
 	bool rv = this->_ThreadPool.Start(&this->_Routine, static_cast<void *>(this));
 
 	return rv;
 }
 
-bool ThreadManager::Shutdown(){
+bool TaskSched::Shutdown(){
 
 	bool rv = this->_ThreadPool.Shutdown();
 
 	return rv;
 }
 
-void *ThreadManager::_Routine(void *arg){
+void *TaskSched::_Routine(void *arg){
 
 	void *rv = NULL;
 
-	ThreadManager *worker = static_cast<ThreadManager *>(arg);
+	TaskSched *worker = static_cast<TaskSched *>(arg);
 	
 	while(true){
 		sleep(1);

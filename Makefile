@@ -4,12 +4,12 @@ CXX:=g++
 CXXFLAGS:= --std=c++11 -g -O0 -I.
 LDFLAGS:= -lpthread 
 
-HEADERS:= ThreadPool.h ThreadManager.h
+HEADERS:= ThreadPool.h TaskSched.h
 
 .PHONY:clean
 
-TARGET:Main.o Master.o ThreadPool.o ThreadManager.o TaskQueue.o $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) Main.o ThreadPool.o ThreadManager.o TaskQueue.o $(LDFLAGS)
+TARGET:Main.o Master.o ThreadPool.o TaskSched.o TaskQueue.o $(HEADERS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) Main.o ThreadPool.o TaskSched.o TaskQueue.o $(LDFLAGS)
 
 Main.o:Main.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c Main.cpp
@@ -17,8 +17,8 @@ Main.o:Main.cpp $(HEADERS)
 ThreadPool.o:ThreadPool.cpp ThreadPool.h
 	$(CXX) $(CXXFLAGS) -c ThreadPool.cpp 
 
-ThreadManager.o:ThreadManager.cpp ThreadManager.h ThreadPool.h
-	$(CXX) $(CXXFLAGS) -c ThreadManager.cpp 
+TaskSched.o:TaskSched.cpp TaskSched.h ThreadPool.h
+	$(CXX) $(CXXFLAGS) -c TaskSched.cpp 
 
 TaskQueue.o:TaskQueue.cpp TaskQueue.h
 	$(CXX) $(CXXFLAGS) -c TaskQueue.cpp
