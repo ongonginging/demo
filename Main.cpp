@@ -14,10 +14,10 @@ int main(int argc, char **argv){
 
 	bool ret = true;
 
-	TaskQueue* q = new TaskQueue();
+	TaskQueue q;
 
-	TaskConsumer consumer((ITaskQueue *)q);
-	TaskProducer producer((ITaskQueue *)q);
+	TaskConsumer consumer((ITaskQueue *)&q);
+	TaskProducer producer((ITaskQueue *)&q);
 
 	long size = sysconf(_SC_NPROCESSORS_ONLN);
 	cout<<"number of TaskConsumers: "<<size<<endl;
@@ -41,8 +41,6 @@ int main(int argc, char **argv){
 	monitor.Run();
 
 	consumer.Shutdown();
-
-	delete q;
 
 	return 0;
 }
