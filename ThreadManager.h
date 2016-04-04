@@ -4,11 +4,11 @@
 
 #include "ThreadPool.h"
 
-class WorkerManager{
+class ThreadManager{
 
 public:
-	WorkerManager();
-	virtual ~WorkerManager();
+	ThreadManager();
+	virtual ~ThreadManager();
 
 	bool Init(long size);
 	bool Start();
