@@ -231,7 +231,7 @@ ThreadPool::~ThreadPool(){
 	std::cout<<"Destruct ThreadPool."<<std::endl;
 };
 
-bool ThreadPool::Init(long size, void *(* start_routine)(void *), void *arg){
+bool ThreadPool::Init(long size){
 
 	bool rv = true;
 
@@ -241,8 +241,6 @@ bool ThreadPool::Init(long size, void *(* start_routine)(void *), void *arg){
 		this->v_attr.push_back(attr);
 		this->v_tid.push_back(-1);
 	}
-	this->start_routine = start_routine;
-	this->arg = arg;
 
 	for (int i=0; i<this->size; i++){
 		pthread_attr_init(&this->v_attr[i]);
@@ -251,14 +249,14 @@ bool ThreadPool::Init(long size, void *(* start_routine)(void *), void *arg){
 	return rv;
 }
 
-bool ThreadPool::Start(){
+bool ThreadPool::Start(void *(* start_routine)(void *), void *arg){
 	
 	bool rv = true;
 	
 	for(int i=0; i<this->size; i++){
 		pthread_attr_t &attr = this->v_attr[i];
 		pthread_t &tid = this->v_tid[i];
-		rv = spawn_thread(tid, attr, this->start_routine, this->arg);
+		rv = spawn_thread(tid, attr, start_routine, arg);
 		if (!rv) {
 			break;
 		}

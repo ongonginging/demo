@@ -12,14 +12,14 @@ WorkerManager::~WorkerManager(){
 
 bool WorkerManager::Init(long size){
 
-	bool rv = this->_ThreadPool.Init(size, &this->_Routine, static_cast<void *>(this));
+	bool rv = this->_ThreadPool.Init(size);
 
 	return rv;
 }
 
 bool WorkerManager::Start(){
 
-	bool rv = this->_ThreadPool.Start();
+	bool rv = this->_ThreadPool.Start(&this->_Routine, static_cast<void *>(this));
 
 	return rv;
 }
