@@ -4,19 +4,18 @@
 
 #include "ITask.h"
 #include "ThreadPool.h"
-#include "TaskQueue.h"
+#include "ITaskQueue.h"
 
 class TaskConsumer{
 
 public:
-	TaskConsumer();
+	TaskConsumer(ITaskQueue *pTaskQueue);
 	virtual ~TaskConsumer();
 
 	bool Init(long size);
 	bool Start();
 	bool Shutdown();
-	bool GetTask(ITask *&task);
-	bool SetTask(ITask *task);
+	bool Recv(ITask *&task);
 
 private:
 	class RoutineArg{
@@ -28,7 +27,7 @@ private:
 	long size;
 	ThreadPool _ThreadPool;
 
-	TaskQueue _TaskQueue;
+	ITaskQueue *pTaskQueue;
 };
 
 #endif //__WORKER_H__

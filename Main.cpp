@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <iostream>
 
+#include "TaskQueue.h"
+#include "TaskProducer.h"
 #include "TaskConsumer.h"
 #include "Monitor.h"
 #include "Hello.h"
@@ -12,10 +14,13 @@ int main(int argc, char **argv){
 
 	bool ret = true;
 
+	TaskQueue* q = new TaskQueue();
+
+	TaskConsumer consumer((ITaskQueue *)q);
+	TaskProducer producer((ITaskQueue *)q);
+
 	long size = sysconf(_SC_NPROCESSORS_ONLN);
 	cout<<"number of TaskConsumers: "<<size<<endl;
-
-	TaskConsumer consumer;
 
 	ret = consumer.Init(size);
 	if (!ret){
@@ -29,13 +34,15 @@ int main(int argc, char **argv){
 	}
 
 	for(int i=0; i<20; i++){
-		consumer.SetTask(new Hello(i));
+		producer.Send(new Hello(i));
 	}
 
 	Monitor monitor;
 	monitor.Run();
 
 	consumer.Shutdown();
+
+	delete q;
 
 	return 0;
 }
