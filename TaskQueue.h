@@ -4,6 +4,7 @@
 
 #include <deque>
 #include <semaphore.h>
+#include <pthread.h>
 
 #include "ITask.h"
 
@@ -19,8 +20,7 @@ public:
 	bool Pop(ITask *&task);
 
 private:
-	sem_t Sem;
-	
+	sem_t Sem; /* read/write semaphore */
 	deque<ITask*> _Queue;
 };
 
