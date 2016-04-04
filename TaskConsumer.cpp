@@ -2,40 +2,40 @@
 #include <unistd.h>
 #include <iostream>
 
-#include "TaskSched.h"
+#include "TaskConsumer.h"
 
-TaskSched::TaskSched(){
+TaskConsumer::TaskConsumer(){
 }
 
-TaskSched::~TaskSched(){
+TaskConsumer::~TaskConsumer(){
 }
 
-bool TaskSched::Init(long size){
+bool TaskConsumer::Init(long size){
 
 	bool rv = this->_ThreadPool.Init(size);
 
 	return rv;
 }
 
-bool TaskSched::Start(){
+bool TaskConsumer::Start(){
 
 	bool rv = this->_ThreadPool.Start(&this->_Routine, static_cast<void *>(this));
 
 	return rv;
 }
 
-bool TaskSched::Shutdown(){
+bool TaskConsumer::Shutdown(){
 
 	bool rv = this->_ThreadPool.Shutdown();
 
 	return rv;
 }
 
-void *TaskSched::_Routine(void *arg){
+void *TaskConsumer::_Routine(void *arg){
 
 	void *rv = NULL;
 
-	TaskSched *worker = static_cast<TaskSched *>(arg);
+	TaskConsumer *worker = static_cast<TaskConsumer *>(arg);
 	
 	while(true){
 		sleep(1);

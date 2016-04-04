@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <iostream>
 
-#include "TaskSched.h"
+#include "TaskConsumer.h"
 
 using namespace std;
 
@@ -11,18 +11,18 @@ int main(int argc, char **argv){
 	bool ret = true;
 
 	long size = sysconf(_SC_NPROCESSORS_ONLN);
-	cout<<"number of TaskScheds: "<<size<<endl;
+	cout<<"number of TaskConsumers: "<<size<<endl;
 
-	TaskSched TaskSched;
+	TaskConsumer TaskConsumer;
 
-	ret = TaskSched.Init(size);
+	ret = TaskConsumer.Init(size);
 	if (!ret){
 		return -1;
 	}
 
-	ret = TaskSched.Start();
+	ret = TaskConsumer.Start();
 	if (!ret){
-		TaskSched.Shutdown();
+		TaskConsumer.Shutdown();
 		return -1;
 	}
 
@@ -30,7 +30,7 @@ int main(int argc, char **argv){
 	while(n-->0){
 		sleep(2);
 	}
-	TaskSched.Shutdown();
+	TaskConsumer.Shutdown();
 
 	return 0;
 }

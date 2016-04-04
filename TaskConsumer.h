@@ -4,11 +4,11 @@
 
 #include "ThreadPool.h"
 
-class TaskSched{
+class TaskConsumer{
 
 public:
-	TaskSched();
-	virtual ~TaskSched();
+	TaskConsumer();
+	virtual ~TaskConsumer();
 
 	bool Init(long size);
 	bool Start();
