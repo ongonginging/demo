@@ -1,5 +1,7 @@
 
+#include <unistd.h>
 #include <iostream>
+
 #include "Monitor.h"
 
 using namespace std;
@@ -13,5 +15,9 @@ Monitor::~Monitor(){
 }
 
 void Monitor::Run(){
-	cout<<"Monitor"<<std::endl;
+	cout<<"Running Monitor"<<std::endl;
+	while(true){
+		sleep(1);
+		cout<<"In loop of Monitor."<<endl;
+	}
 }

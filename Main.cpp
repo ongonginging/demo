@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "TaskConsumer.h"
+#include "Monitor.h"
 
 using namespace std;
 
@@ -26,10 +27,9 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	int n = 3;
-	while(n-->0){
-		sleep(2);
-	}
+	Monitor monitor;
+	monitor.Run();
+
 	TaskConsumer.Shutdown();
 
 	return 0;

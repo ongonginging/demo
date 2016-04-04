@@ -9,7 +9,7 @@ HEADERS:= Monitor.h TaskQueue.h ThreadPool.h TaskConsumer.h
 .PHONY:clean
 
 TARGET:Main.o Monitor.o ThreadPool.o TaskConsumer.o TaskQueue.o $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) Main.o ThreadPool.o TaskConsumer.o TaskQueue.o $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) Main.o Monitor.o ThreadPool.o TaskConsumer.o TaskQueue.o $(LDFLAGS)
 
 Main.o:Main.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c Main.cpp
