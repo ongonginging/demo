@@ -8,8 +8,8 @@ HEADERS:= Monitor.h TaskQueue.h ThreadPool.h TaskConsumer.h
 
 .PHONY:clean
 
-TARGET:Main.o Monitor.o ThreadPool.o TaskConsumer.o TaskQueue.o $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) Main.o Monitor.o ThreadPool.o TaskConsumer.o TaskQueue.o $(LDFLAGS)
+TARGET:Main.o Hello.o Monitor.o ThreadPool.o TaskConsumer.o TaskQueue.o $(HEADERS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) Main.o Hello.o Monitor.o ThreadPool.o TaskConsumer.o TaskQueue.o $(LDFLAGS)
 
 Main.o:Main.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c Main.cpp
@@ -25,6 +25,9 @@ TaskQueue.o:TaskQueue.cpp TaskQueue.h
 
 Monitor.o:Monitor.cpp Monitor.h
 	$(CXX) $(CXXFLAGS) -c Monitor.cpp
+
+Hello.o:Hello.cpp Hello.h
+	$(CXX) $(CXXFLAGS) -c Hello.cpp
 
 clean:
 	rm -rf $(TARGET) *.o

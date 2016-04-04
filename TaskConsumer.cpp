@@ -34,6 +34,11 @@ bool TaskConsumer::GetTask(ITask *&task){
 	return rv;
 }
 
+bool TaskConsumer::SetTask(ITask *task){
+	bool rv = this->_TaskQueue.Push(task);
+	return rv;
+}
+
 void *TaskConsumer::_Routine(void *arg){
 
 	void *rv = NULL;

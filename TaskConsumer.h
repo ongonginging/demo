@@ -16,7 +16,7 @@ public:
 	bool Start();
 	bool Shutdown();
 	bool GetTask(ITask *&task);
-
+	bool SetTask(ITask *task);
 private:
 	class RoutineArg{
 	};
