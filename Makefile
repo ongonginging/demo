@@ -4,11 +4,11 @@ CXX:=g++
 CXXFLAGS:= --std=c++11 -g -O0 -I.
 LDFLAGS:= -lpthread 
 
-HEADERS:= Master.h TaskQueue.h ThreadPool.h TaskConsumer.h
+HEADERS:= Monitor.h TaskQueue.h ThreadPool.h TaskConsumer.h
 
 .PHONY:clean
 
-TARGET:Main.o Master.o ThreadPool.o TaskConsumer.o TaskQueue.o $(HEADERS)
+TARGET:Main.o Monitor.o ThreadPool.o TaskConsumer.o TaskQueue.o $(HEADERS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) Main.o ThreadPool.o TaskConsumer.o TaskQueue.o $(LDFLAGS)
 
 Main.o:Main.cpp $(HEADERS)
@@ -23,8 +23,8 @@ TaskConsumer.o:TaskConsumer.cpp TaskConsumer.h
 TaskQueue.o:TaskQueue.cpp TaskQueue.h
 	$(CXX) $(CXXFLAGS) -c TaskQueue.cpp
 
-Master.o:Master.cpp Master.h
-	$(CXX) $(CXXFLAGS) -c Master.cpp
+Monitor.o:Monitor.cpp Monitor.h
+	$(CXX) $(CXXFLAGS) -c Monitor.cpp
 
 clean:
 	rm -rf $(TARGET) *.o

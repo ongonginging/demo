@@ -2,11 +2,13 @@
 #ifndef __MASTERMANAGER_H__
 #define __MASTERMANAGER_H__
 
-class Master{
+class Monitor{
 
 public:
-	Master();
-	virtual ~Master();
+	Monitor();
+	virtual ~Monitor();
+
+	void Run();
 
 private:
 
