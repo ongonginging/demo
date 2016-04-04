@@ -7,17 +7,18 @@
 #include <pthread.h>
 
 #include "ITask.h"
+#include "ITaskQueue.h"
 
 using namespace std;
 
-class TaskQueue{
+class TaskQueue:ITaskQueue{
 
 public:
 	TaskQueue();
 	virtual ~TaskQueue();
 
-	bool Push(ITask *task);
-	bool Pop(ITask *&task);
+	virtual bool Push(ITask *task);
+	virtual bool Pop(ITask *&task);
 
 private:
 	sem_t Sem; 
