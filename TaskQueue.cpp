@@ -10,8 +10,8 @@ using namespace std;
 
 TaskQueue::TaskQueue(){
 	int pshared = 0; /* Semaphore is used within this process only. */
-	int count = 0;
-	int ret = sem_init(&this->Sem, pshared, count);
+	int value = 0;
+	int ret = sem_init(&this->Sem, pshared, value);
 	switch(ret){
 		case 0:
 		{
