@@ -89,7 +89,6 @@ spawn_thread(pthread_t& tid, pthread_attr_t& attr, void *(*start_routine)(void *
 	bool rv = true;
 	void *status = NULL;
 
-
 #if 1
 	/* 设置线程属性 */
 	int stack_size = 2097152;//2M
@@ -108,7 +107,9 @@ spawn_thread(pthread_t& tid, pthread_attr_t& attr, void *(*start_routine)(void *
         if (s != 0)
         	handle_error_en(s, "posix_memalign");
 
+#if DEBUG
         printf("posix_memalign() allocated at %p\n", sp);
+#endif
 
         s = pthread_attr_setstack(&attr, sp, stack_size);
         if (s != 0)
@@ -120,7 +121,9 @@ spawn_thread(pthread_t& tid, pthread_attr_t& attr, void *(*start_routine)(void *
 	switch(ret){
 		case 0:
 		{
+#if DEBUG
 			cout<<"Creating thread success, thread id: "<<tid<<"!"<<endl;
+#endif
 		}
 		break;
 		case EAGAIN:
@@ -224,11 +227,15 @@ free_thread(pthread_t &tid, pthread_attr_t &attr){
 }
 
 ThreadPool::ThreadPool(){
+#if DEBUG
 	std::cout<<"Contruct ThreadPool."<<std::endl;
+#endif
 };
 
 ThreadPool::~ThreadPool(){
+#if DEBUG
 	std::cout<<"Destruct ThreadPool."<<std::endl;
+#endif
 };
 
 bool ThreadPool::Init(long size){
@@ -260,7 +267,9 @@ bool ThreadPool::Start(void *(* start_routine)(void *), void *arg){
 		if (!rv) {
 			break;
 		}
+#if DEBUG
 		display_pthread_attr(&attr, (char *)"\t");
+#endif
 	}
 
 	return rv;

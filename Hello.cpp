@@ -9,15 +9,21 @@ using namespace std;
 
 Hello::Hello(int i){
 	this->i = i;
-	//cout<<"Construct Hello "<<this->i<<"."<<endl;
+#if DEBUG
+	cout<<"Construct Hello "<<this->i<<"."<<endl;
+#endif
 }
 
 Hello::~Hello(){
-	//cout<<"Destruct Hello "<<this->i<<"."<<endl;
+#if DEBUG
+	cout<<"Destruct Hello "<<this->i<<"."<<endl;
+#endif
 }
 
 void Hello::Run(){
-	//cout<<"Hello, Thread("<<pthread_self()<<")."<<endl;
+#if DEBUG
+	cout<<"Hello, Thread("<<pthread_self()<<")."<<endl;
+#endif
 	usleep(1);
 }
 

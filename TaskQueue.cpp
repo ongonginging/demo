@@ -16,7 +16,9 @@ TaskQueue::TaskQueue(){
 	switch(ret){
 		case 0:
 		{
+#if DEBUG
 			cout<<"Initialized mutex lock of TaskQueue success."<<endl;
+#endif
 		}
 		break;
 		case EINVAL:
@@ -45,7 +47,9 @@ TaskQueue::TaskQueue(){
 	switch(ret){
 		case 0:
 		{
+#if DEBUG
 			cout<<"Initialized semaphore of TaskQueue success."<<endl;
+#endif
 		}
 		break;
 		case EINVAL:
@@ -71,7 +75,9 @@ TaskQueue::~TaskQueue(){
 	switch(ret){
 		case 0:
 		{
+#if DEBUG
 			cout<<"Destoried semaphore of TaskQueue success."<<endl;
+#endif
 		}
 		break;
 		case EINVAL:
@@ -96,7 +102,9 @@ bool TaskQueue::Push(ITask *task){
 	switch(ret){
 		case 0:
 		{
-			//cout<<"Post semaphore success."<<endl;
+#if DEBUG
+			cout<<"Post semaphore success."<<endl;
+#endif
 		}
 		break;
 		case EINVAL:
