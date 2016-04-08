@@ -1,7 +1,7 @@
 
 TARGET:=program
 CXX:=g++
-CXXFLAGS:= --std=c++11 -g -O0 -I.
+CXXFLAGS:= --std=c++11 -g -O0 -I. -DDEBUG
 LDFLAGS:= -lpthread 
 
 HEADERS:= Monitor.h TaskQueue.h ThreadPool.h TaskConsumer.h TaskProducer.h Hello.h
