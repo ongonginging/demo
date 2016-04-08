@@ -21,8 +21,10 @@ public:
 	virtual bool Pop(ITask *&task);
 
 private:
-	sem_t Sem; 
-	deque<ITask*> _Queue;
+	sem_t S; 
+	pthread_mutex_t M;
+	pthread_mutexattr_t MAttr;
+	deque<ITask*> Q;
 };
 
 #endif //__TASK_QUEUE_H__

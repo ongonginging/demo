@@ -9,9 +9,39 @@
 using namespace std;
 
 TaskQueue::TaskQueue(){
-	int pshared = 0; /* Semaphore is used within this process only. */
+	int pshared = 0; /* saphore is used within this process only. */
 	int value = 0;
-	int ret = sem_init(&this->Sem, pshared, value);
+	this->M = PTHREAD_MUTEX_INITIALIZER;
+	int ret = pthread_mutex_init(&this->M, &this->MAttr);
+	switch(ret){
+		case 0:
+		{
+			cout<<"Initialized mutex lock of TaskQueue success."<<endl;
+		}
+		break;
+		case EINVAL:
+		{
+			cout<<"Error: value exceeds SEM_VALUE_MAX."<<endl;
+		}
+		break;
+		case EBUSY:
+		{
+			cout<<"Error:."<<endl;
+		}
+		break;
+		case EFAULT:
+		{
+			cout<<"Error:."<<endl;
+		}
+		break;
+		default:
+		{
+			cout<<"Error: Unknown error happend when initializing semaphore."<<endl;
+		}
+		break;
+	
+	}
+	ret = sem_init(&this->S, pshared, value);
 	switch(ret){
 		case 0:
 		{
@@ -37,7 +67,7 @@ TaskQueue::TaskQueue(){
 }
 
 TaskQueue::~TaskQueue(){
-	int ret = sem_destroy(&this->Sem);
+	int ret = sem_destroy(&this->S);
 	switch(ret){
 		case 0:
 		{
@@ -59,12 +89,14 @@ TaskQueue::~TaskQueue(){
 
 bool TaskQueue::Push(ITask *task){
 	bool rv = true;
-	this->_Queue.push_back(task);
-	int ret = sem_post(&this->Sem);
+	//pthread_mutex_lock(&this->M);/* 单点写入可以不加锁 */
+	this->Q.push_back(task);
+	//pthread_mutex_unlock(&this->M);
+	int ret = sem_post(&this->S);
 	switch(ret){
 		case 0:
 		{
-			cout<<"Post semaphore of TaskQueue success."<<endl;
+			cout<<"Post semaphore success."<<endl;
 		}
 		break;
 		case EINVAL:
@@ -88,14 +120,16 @@ bool TaskQueue::Push(ITask *task){
 
 bool TaskQueue::Pop(ITask *&task){
 	bool rv = true;
-	int ret = sem_wait(&this->Sem);
-	if (this->_Queue.empty()){
+	int ret = sem_wait(&this->S);
+	if (this->Q.empty()){
 		cout<<"Error: It should not happen."<<endl;
 		rv = false;
 		return rv;
 	}
-	task = this->_Queue.front();
-	this->_Queue.pop_front();
+	pthread_mutex_lock(&this->M);
+	task = this->Q.front();
+	this->Q.pop_front();
+	pthread_mutex_unlock(&this->M);
 	return rv;
 }
 
