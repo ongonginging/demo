@@ -1,6 +1,6 @@
 
-#ifndef __MASTERMANAGER_H__
-#define __MASTERMANAGER_H__
+#ifndef __MONITOR_H__
+#define __MONITOR_H__
 
 class Monitor{
 
@@ -14,4 +14,5 @@ private:
 
 };
 
-#endif //__MASTERMANAGER_H__
+#endif //__MONITOR_H__
+

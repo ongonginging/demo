@@ -1,6 +1,6 @@
 
-#ifndef __TASK_MANAGER_H__
-#define __TASK_MANAGER_H__
+#ifndef __TASK_QUEUE_H__
+#define __TASK_QUEUE_H__
 
 #include <deque>
 #include <semaphore.h>
@@ -25,5 +25,5 @@ private:
 	deque<ITask*> _Queue;
 };
 
-#endif //__TASK_MANAGER_H__
+#endif //__TASK_QUEUE_H__
 

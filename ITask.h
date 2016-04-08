@@ -1,6 +1,6 @@
 
-#ifndef __TASK_H__
-#define __TASK_H__
+#ifndef __ITASK_H__
+#define __ITASK_H__
 
 class ITask{
 public:
@@ -9,4 +9,5 @@ public:
 	virtual void Run(void) = 0;
 };
 
-#endif //__TASK_H__
+#endif //__ITASK_H__
+

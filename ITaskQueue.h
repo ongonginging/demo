@@ -1,6 +1,6 @@
 
-#ifndef __ITASKQUEUE_H__
-#define __ITASKQUEUE_H__
+#ifndef __ITASK_QUEUE_H__
+#define __ITASK_QUEUE_H__
 
 #include "ITask.h"
 
@@ -12,4 +12,5 @@ public:
 	virtual bool Pop(ITask *&task) = 0;
 };
 
-#endif //__ITASKQUEUE_H__
+#endif //__ITASK_QUEUE_H__
+

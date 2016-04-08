@@ -1,6 +1,6 @@
 
-#ifndef __WORKER_H__
-#define __WORKER_H__
+#ifndef __TASK_CONSUMER_H__
+#define __TASK_CONSUMER_H__
 
 #include "ITask.h"
 #include "ThreadPool.h"
@@ -30,5 +30,5 @@ private:
 	ITaskQueue *pTaskQueue;
 };
 
-#endif //__WORKER_H__
+#endif //__TASK_CONSUMER_H__
 
