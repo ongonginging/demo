@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class TaskQueue:ITaskQueue{
+class TaskQueue:public ITaskQueue{
 
 public:
 	TaskQueue();
