@@ -36,6 +36,7 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
+	cout<<"enter testing ..."<<endl;
 	struct timeval t1;
 	gettimeofday(&t1, NULL);
 	for(int i=0; i<TIMES; i++){
@@ -44,6 +45,7 @@ int main(int argc, char **argv){
 	struct timeval t2;
 	gettimeofday(&t2, NULL);
 	cout<<"coast: "<<TIMES<<" messages handled in "<<(t2.tv_sec*1000000+t2.tv_usec)-(t1.tv_sec*1000000+t1.tv_usec)<<" Microseconds(微秒)."<<endl;
+	cout<<"leave testing ..."<<endl;
 
 	Monitor monitor;
 	monitor.Run();
