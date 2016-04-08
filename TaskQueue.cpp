@@ -96,7 +96,7 @@ bool TaskQueue::Push(ITask *task){
 	switch(ret){
 		case 0:
 		{
-			cout<<"Post semaphore success."<<endl;
+			//cout<<"Post semaphore success."<<endl;
 		}
 		break;
 		case EINVAL:

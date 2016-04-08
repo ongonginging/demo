@@ -39,7 +39,7 @@ void *TaskConsumer::_Routine(void *arg){
 	TaskConsumer *consumer = static_cast<TaskConsumer *>(arg);
 	
 	while(true){
-		cout<<"("<<pthread_self()<<")wait semaphore..."<<endl;
+		//cout<<"("<<pthread_self()<<")wait semaphore..."<<endl;
 		ITask* task = NULL;
 		bool ret = consumer->Recv(task);
 		if (ret){

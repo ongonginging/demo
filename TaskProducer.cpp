@@ -7,12 +7,12 @@
 using namespace std;
 
 TaskProducer::TaskProducer(ITaskQueue *pTaskQueue){
-	cout<<"Construct TaskProducer."<<endl;
+	//cout<<"Construct TaskProducer."<<endl;
 	this->pTaskQueue = pTaskQueue;
 }
 
 TaskProducer::~TaskProducer(){
-	cout<<"Destruct TaskProducer."<<endl;
+	//cout<<"Destruct TaskProducer."<<endl;
 }
 
 bool TaskProducer::Send(ITask *task){

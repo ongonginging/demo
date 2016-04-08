@@ -1,4 +1,5 @@
 
+#include <sys/time.h>
 #include <unistd.h>
 #include <iostream>
 
@@ -9,6 +10,8 @@
 #include "Hello.h"
 
 using namespace std;
+
+#define TIMES 10000000
 
 int main(int argc, char **argv){
 
@@ -33,9 +36,14 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	for(int i=0; i<20; i++){
+	struct timeval t1;
+	gettimeofday(&t1, NULL);
+	for(int i=0; i<TIMES; i++){
 		producer.Send(new Hello(i));
 	}
+	struct timeval t2;
+	gettimeofday(&t2, NULL);
+	cout<<"coast: "<<TIMES<<" messages handled in "<<(t2.tv_sec*1000000+t2.tv_usec)-(t1.tv_sec*1000000+t1.tv_usec)<<" Microseconds(微秒)."<<endl;
 
 	Monitor monitor;
 	monitor.Run();
