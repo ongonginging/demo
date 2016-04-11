@@ -14,3 +14,4 @@ if [ $? != 0 ]; then
 	echo "Something wrong happend when executing command: ./program."
 	exit -1
 fi
+

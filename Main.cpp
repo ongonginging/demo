@@ -11,7 +11,7 @@
 
 using namespace std;
 
-#define TIMES 10000000
+#define TIMES 100000
 
 int main(int argc, char **argv){
 
