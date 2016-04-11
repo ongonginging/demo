@@ -2,6 +2,7 @@
 #include <deque>
 #include <iostream>
 #include <semaphore.h>
+#include <pthread.h>
 
 #include "ITask.h"
 #include "TaskQueue.h"
