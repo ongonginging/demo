@@ -96,9 +96,9 @@ TaskQueue::~TaskQueue(){
 
 bool TaskQueue::Push(ITask *task){
 	bool rv = true;
-	//pthread_mutex_lock(&this->M);/* 单点写入可以不加锁 */
+	pthread_mutex_lock(&this->M);/* 单点写入可以不加锁 */
 	this->Q.push_back(task);
-	//pthread_mutex_unlock(&this->M);
+	pthread_mutex_unlock(&this->M);
 	int ret = sem_post(&this->S);
 	switch(ret){
 		case 0:
@@ -130,12 +130,12 @@ bool TaskQueue::Push(ITask *task){
 bool TaskQueue::Pop(ITask *&task){
 	bool rv = true;
 	int ret = sem_wait(&this->S);
+	pthread_mutex_lock(&this->M);
 	if (this->Q.empty()){
-		cout<<"Error: It should not happen."<<endl;
+		cout<<"Warning: thundering??"<<endl;
 		rv = false;
 		return rv;
 	}
-	pthread_mutex_lock(&this->M);
 	task = this->Q.front();
 	this->Q.pop_front();
 	pthread_mutex_unlock(&this->M);
