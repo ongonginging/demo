@@ -38,16 +38,14 @@ void *TaskConsumer::_Routine(void *arg){
 	void *rv = NULL;
 	TaskConsumer *consumer = static_cast<TaskConsumer *>(arg);
 	
+	ITask* task = NULL;
 	while(true){
-#if DEBUG
-		cout<<"("<<pthread_self()<<")wait semaphore..."<<endl;
-#endif
-		ITask* task = NULL;
 		bool ret = consumer->Recv(task);
 		if (ret){
 			if (task != NULL){
 				task->Run();
 				delete task;
+				task = NULL;
 			}else{
 				cout<<"Task is NULL."<<endl;
 			}

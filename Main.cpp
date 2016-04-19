@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "TaskQueue.h"
+#include "TaskQueueWithRWLock.h"
 #include "TaskProducer.h"
 #include "TaskConsumer.h"
 #include "Monitor.h"
@@ -17,10 +18,10 @@ int main(int argc, char **argv){
 
 	bool ret = true;
 
-	TaskQueue *q = new TaskQueue();
+	ITaskQueue *q = static_cast<ITaskQueue *>(new TaskQueue());/*(new TaskQueueWithRWLock());*/
 
-	TaskConsumer consumer((ITaskQueue *)q);
-	TaskProducer producer((ITaskQueue *)q);
+	TaskConsumer consumer(q);
+	TaskProducer producer(q);
 
 	long size = sysconf(_SC_NPROCESSORS_ONLN);
 	cout<<"number of consumers: "<<size<<endl;
